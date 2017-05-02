@@ -2,7 +2,7 @@
 
 ## 一、简介
 
-本文为Bainu Android终端SDK的新手使用教程，只涉及教授SDK的使用方法，默认读者已经熟悉AndroidStudio(推荐)和eclipse开发工具的基本使用方法，以及具有一定的编程知识基础等。
+本文为Bainu Android终端SDK使用教程，只涉及教授SDK的使用方法，默认读者已经熟悉AndroidStudio(推荐)和eclipse开发工具的基本使用方法，以及具有一定的编程知识基础等。
 
 **本文只给出用Android Studio开发环境sdk配置的介绍（demo 用Android Studio编写），eclipse用户参考Android studio版**
 
@@ -33,10 +33,21 @@
 
 #### 1.1 android studio 导入依赖包
 
-   在moudle build.gradle 的 dependencies 节点加入如下依赖：
+- 在project的 build.gradle 中设置jitpack
 
 ```java
-compile 'com.zuga:BainuSdk:1.0.1'//后续随时更新，到https://jcenter.bintray.com/com/zuga/BainuSdk查看最新版本
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+- 在moudle build.gradle 的 dependencies 节点加入如下依赖：
+
+```java
+compile 'com.github.hubcin:android-sdk-demo:1.0.1'//后续随时更新
 compile 'com.android.support:appcompat-v7:23.2.1'//版本根据自己的项目
 ```
 
