@@ -23,9 +23,27 @@ import com.zuga.bainu.objects.BNWebPageObject;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private BNApi api;
     private int scene = BNSendRequest.SCENE_YARLQAA;
+    private BNApi api;
     private TextView tvLog;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        RadioButton rvAbdr = (RadioButton) findViewById(R.id.rb_abdr);
+        RadioButton rvQomrlg = (RadioButton) findViewById(R.id.rb_qomrlg);
+        RadioButton rvYarlqaa = (RadioButton) findViewById(R.id.rb_yarlqaa);
+        rvAbdr.setOnClickListener(this);
+        rvQomrlg.setOnClickListener(this);
+        rvYarlqaa.setOnClickListener(this);
+        tvLog = (TextView) findViewById(R.id.tv_log);
+        Log.e(TAG, "file: " + getFilesDir());
+        Log.e(TAG, "cache: " + getCacheDir());
+
+        //获取api
+        api = BNApiFactory.getBNApi();
+    }
 
     /*文字分享*/
     public void TextShare(View view) {
@@ -168,24 +186,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 scene = BNSendRequest.SCENE_QOMRLG;
                 break;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        RadioButton rvAbdr = (RadioButton) findViewById(R.id.rb_abdr);
-        RadioButton rvQomrlg = (RadioButton) findViewById(R.id.rb_qomrlg);
-        RadioButton rvYarlqaa = (RadioButton) findViewById(R.id.rb_yarlqaa);
-        rvAbdr.setOnClickListener(this);
-        rvQomrlg.setOnClickListener(this);
-        rvYarlqaa.setOnClickListener(this);
-        tvLog = (TextView) findViewById(R.id.tv_log);
-        Log.e(TAG, "file: " + getFilesDir());
-        Log.e(TAG, "cache: " + getCacheDir());
-
-        //获取api
-        api = BNApiFactory.getBNApi();
     }
 
     private void getType() {

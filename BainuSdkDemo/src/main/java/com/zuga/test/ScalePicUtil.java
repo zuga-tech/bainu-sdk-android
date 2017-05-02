@@ -8,10 +8,6 @@ import android.view.WindowManager;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by saqrag on 16-10-21.
- */
-
 public class ScalePicUtil {
     private byte[] getimage(String srcPath, Context context) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
@@ -39,7 +35,6 @@ public class ScalePicUtil {
     }
 
     private byte[] compressImage(Bitmap image) {
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, baos);
         int options = 100;
