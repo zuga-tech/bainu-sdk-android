@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="TextShare"
+            android:text="Text_Share" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="imageShare"
+            android:text="image_Share" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="webPageShare"
+            android:text="web_Page_Share" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="login"
+            android:text="login" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/rb_yarlqaa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yarlqaa" />
+
+                <RadioButton
+                    android:id="@+id/rb_qomrlg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Qomrlg" />
+
+                <RadioButton
+                    android:id="@+id/rb_abdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abdr" />
+
+
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_log"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6493c6"
+        android:textColor="#fff" />
+</LinearLayout>
