@@ -16,6 +16,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        BNApiFactory.init(this,"bn0428040730");
+        BNApiFactory.init(this, "bn0428040730");
     }
 }
