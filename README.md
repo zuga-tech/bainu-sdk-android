@@ -47,7 +47,7 @@ allprojects {
 - 在moudle build.gradle 的 dependencies 节点加入如下依赖：
 
 ```java
-compile 'com.github.hubcin:android-sdk-demo:1.0.1'//后续随时更新
+compile 'com.github.Saqrag:BainuSdk:1.0.1'//后续随时更新
 compile 'com.android.support:appcompat-v7:23.2.1'//版本根据自己的项目
 ```
 
