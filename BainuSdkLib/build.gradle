@@ -19,5 +19,5 @@ android {
 }
 
 dependencies {
-    compile files('libs/BainuSdk1.0.1.jar')
+    compile files('libs/BanuSdk1.0.2.jar')
 }
