@@ -20,8 +20,7 @@ android {
 }
 
 dependencies {
-    compile project(':BainuSdkLib')
-//    compile 'com.github.Saqrag:BainuSdk:1.0.1'
+//    compile project(':BainuSdkLib')
+    compile 'com.github.Saqrag:BainuSdk:1.0.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
-//    compile 'com.github.hubcin:android-sdk-demo:1.0.1'//后续随时更新
 }
