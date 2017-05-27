@@ -23,9 +23,9 @@
 我们审核通过之后将会发回接入所需的APP_ID，APP_SECRET，SDK和Demo。
 
 
-- **测试APP_ID：**bn0428040730
-- **测试APP_SECRET：**2KzJu3ub7mlkklYRxG6BJwTxChApED06O0gItbk0X5LIQ90Ofx
-- **测试包名：**com.zuga.test
+- **测试APP_ID：** bn0428040730
+- **测试APP_SECRET：** 2KzJu3ub7mlkklYRxG6BJwTxChApED06O0gItbk0X5LIQ90Ofx
+- **测试包名：** com.zuga.test
 
 ## 三、 搭建开发环境
 
