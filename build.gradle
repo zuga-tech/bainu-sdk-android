@@ -21,6 +21,6 @@ android {
 
 dependencies {
 //    compile project(':BainuSdkLib')
-    compile 'com.github.Saqrag:BainuSdk:1.0.2'
+    compile 'com.github.zuga-tech:BainuSdkAndroid:1.0.3'
     compile 'com.android.support:appcompat-v7:25.3.1'
 }
