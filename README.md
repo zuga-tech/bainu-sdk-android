@@ -47,7 +47,7 @@ allprojects {
 - 在moudle build.gradle 的 dependencies 节点加入如下依赖：
 
 ```java
-compile 'com.github.Saqrag:BainuSdk:1.0.2'//后续随时更新
+compile 'ccom.github.zuga-tech:BainuSdkAndroid:1.0.3'//后续随时更新
 compile 'com.android.support:appcompat-v7:23.2.1'//版本根据自己的项目
 ```
 
@@ -324,4 +324,8 @@ Bainu OAuth2.0授权登录目前支持authorization_code模式，适用于拥有
 ### V1.0.2
 
 - 修复一些bug
+
+### v1.0.3
+
+- 换仓库
 
