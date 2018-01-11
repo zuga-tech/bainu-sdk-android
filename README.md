@@ -323,7 +323,6 @@ Bainu OAuth2.0 supports only authorization_code method, and is recommended for a
 
 ### v1.0.3
 
-- 修改初始化接口
 - modified initializing apis
 - SDK repository changed
 
