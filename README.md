@@ -1,39 +1,38 @@
-# bainuSdk to user
+# BainuSdk
 
-## 一、简介
+[中文版文档](./README_CN.md)
+## 1.Introduction
 
-本文为Bainu Android终端SDK使用教程，只涉及教授SDK的使用方法，默认读者已经熟悉AndroidStudio(推荐)和eclipse开发工具的基本使用方法，以及具有一定的编程知识基础等。
+This document includes the usage of our android SDK. at this point, we assume that you are familiar with Android Studio and Eclipse, and have a basic knowledge of programming and similar project experience.
 
-**本文只给出用Android Studio开发环境sdk配置的介绍（demo 用Android Studio编写），eclipse用户参考Android studio版**
+**Note**: This introduction only covers Android Studio part, so for those who still use Eclipse, sorry!
 
-## 二、 注册获取资源
+## 2.Registering and Downloading
 
-目前Bainu开放平台不对外公开注册，不过原则上不会拒绝符合法律法规的应用开发者。请发送邮件到 business@zuga-tech.com，附上您应用的：
+The Bainu Android SDK is not yet completely open for third parties at this moment, but we will receive your request for integrating our SDK into your application if you send following informations to our E-mail:business@zuga-tech.com. After having reviewed your app, if everything OK, we will send you the APP_ID,APP_SECRET,SDK and Demo App.
 
-- **蒙文名称**
-- **英文名称**
+- **Mongolian Name of your App** (Traditional Mongolian)
+- **English Name of your App**
 - **iOS Bundle ID**
-- **Android 包名**
-- **应用Logo**（640*640）
-- **官网地址**
-- **AppStore下载地址**
-- **安卓下载地址**（非apk地址）
-- **蒙文介绍**
+- **Android Package Name**
+- **Logo**（640*640）
+- **Home Page**
+- **iOS AppStore URL**
+- **Android URL**（!apk_address）
+- **Introduction** (in traditional Mongolian)
 
-我们审核通过之后将会发回接入所需的APP_ID，APP_SECRET，SDK和Demo。
+**For test:**
+- **APP_ID：** bn0428040730
+- **APP_SECRET：** 2KzJu3ub7mlkklYRxG6BJwTxChApED06O0gItbk0X5LIQ90Ofx
+- **package name** com.zuga.test
 
+## 3.Development Environment Setup
 
-- **测试APP_ID：** bn0428040730
-- **测试APP_SECRET：** 2KzJu3ub7mlkklYRxG6BJwTxChApED06O0gItbk0X5LIQ90Ofx
-- **测试包名：** com.zuga.test
+### 1.Import the SDK
 
-## 三、 搭建开发环境
+#### 1.1 Add gradle dependency in android studio
 
-### 1. 导入Sdk
-
-#### 1.1 android studio 导入依赖包
-
-- 在project的 build.gradle 中设置jitpack
+- add **jitpack** maven repository into your project's `build.gradle`
 
 ```java
 allprojects {
@@ -44,47 +43,47 @@ allprojects {
 }
 ```
 
-- 在moudle build.gradle 的 dependencies 节点加入如下依赖：
+- in your App's `build.gradle`, add dependencies like:
 
 ```java
-compile 'com.github.zuga-tech:bainu-sdk-android:1.0.3'//后续随时更新
-compile 'com.android.support:appcompat-v7:23.2.1'//版本根据自己的项目
+compile 'com.github.zuga-tech:bainu-sdk-android:1.0.3'//check the latest version on github
+compile 'com.android.support:appcompat-v7:23.2.1'//change version according to your project
 ```
 
-### 1.2 eclipse 导入jar包
+### 1.2 Import Jar package intor your Eclipse project
 
 ```java
-- 打开sdk包，bainuSdk(版本号).jar 包导入到工程。
-- 导入android.support.v7，版本根据自己的项目
+- import bainuSdk(version_code).jar into project
+- import android.support.v7(version_code) into project
 ```
 
-## 四、初始化sdk
+## 4.Initialization
 
-### 添加权限
+### Add permissions in your App's `AndroidManifest.xml`
 
 ```java
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-sdk不用这个权限，分享本地图片时请自行添加此权限->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-sdk doesn't use this permission,but you're gonna need this if you want to share local image->
 ```
 
-### 创建Application子类
-在工程中创建Appication的子类（Demo 上类名为MyApplication),并在Android Manifest的Application 字节点添加
+### 5.Create a class that extends Application
+Create a class extends `Applicaion`(see MyApplication in Demo), and in `AndroidManifest.xml`'s application tag add: 
 
 ```java
 android:name="com.zuga.test.MyApplication"
 ```
 
-### 添加初始化代码
-在Applicaltion子类的 `onCreate()` 方法中添加如下代码
+### Initialize SDK in your newly created `Applicaion.java`
+Add following line in your Applications `onCreate()` method
 
 ```java
 BNApiFactory.init(Context context,String appId);
 ```
 
-- appId:从官网上申请的App_ID
+- `appId`:App_ID that was provided to you
 
-整体代码如下
+example:
 
 ```java
 public class MyApplication extends Application {
@@ -96,7 +95,7 @@ public class MyApplication extends Application {
 }
 ```
 
-运行之后打印如下log,表示sdk初始化成功。
+- Now, run your App, if following lines appear in logcat window, it means SDK initialized without problem, we are good to go.
 
 ```java
                                 BainuSdkErr---->
@@ -110,48 +109,47 @@ public class MyApplication extends Application {
                                 <------BainuSdkErr
 ```
 
-## 五、分享
+## 5.Sharing
 
-分享之前在分享Activity的`onCreate()`方法中获取BNApi对象，代码如下
+Before start shareing content, get the `BNApi` instance in your Activity's `onCreate()` method:
 
 ```java
 api = BNApiFactory.getBNApi();
 ```
 
-目前支持分享到三种场景：
+We only support following scene for sharing contents:
 
 ```java
-request.scene = BNSendRequest.SCENE_QOMRLG;//朋友圈
-request.scene = BNSendRequest.SCENE_YARLQAA;//对话
-request.scene = BNSendRequest.SCENE_ABDR;//收藏
+request.scene = BNSendRequest.SCENE_QOMRLG;// Bainu circle(moment|chomorlig etc.)
+request.scene = BNSendRequest.SCENE_YARLQAA;//Bainu chat(p2p chat or group chat)
+request.scene = BNSendRequest.SCENE_ABDR;//Bainu favourites(abdar in Mongolian)
 ```
 
-### 1. 分享文字
+### 1. Sharing text
 
 ```java
-       /*文字分享*/
+       /*sharing text content*/
     public void TextShare(View view) {
-        //bainu目前只能支持蒙科里编码书写的蒙古语,其他语言文字用Unicode（android默认）
+      //bainu supports only Menksoft code for Traditional Mongolian, for other languages, Unicode
 
-        //1.创建文字对象（蒙语用蒙科里编码写）
+        //1.Instanciate text object
         BNTextObject textObject = new BNTextObject();
-        textObject.setText("mongolian text should be MenkCode!");
+        textObject.setText("mongolian text should be Menksoft Code!");
 
-        //2.创建信息
+        //2.Create media message
         BNMediaMessage bnMediaMessage = new BNMediaMessage(textObject);
 //        bnMediaMessage.setTitle("Text");
 
-        //3.创建
+        //3.Create request
         BNSendRequest bnSendRequest = new BNSendRequest();
         bnSendRequest.message = bnMediaMessage;
         bnSendRequest.scene = BNSendRequest.SCENE_QOMRLG;
-        //分享时:调试使用,返回错误信息
-        //登录时:接受返回信息
+
         bnSendRequest.setRespListener(new BNSendRequest.RespListener() {
             /**
-             * 调试时使用，当内容分享到Bainu出错时调用此方法。注意没有错误时不一定每次调用此方法，但是出错一定会调用此方法
-             * @param errorType 错误类型，值为0没有错误;值为其他，出错
-             * @param message errorType == 0时，返回成功信息.errorType != 0时，返回错误信息
+             * This listener may not be called when share success, but is bound to be called on every error.
+             * @param errorType 0 means success, others for errors
+             * @param message  contains error message only when errorType!=0
              */
             @Override
             public void resp(int errorType, String message) {
@@ -161,45 +159,44 @@ request.scene = BNSendRequest.SCENE_ABDR;//收藏
             }
         });
 
-        //4.发送
-        if (api.isBainuInstalledOrLatestVersion()) {//如果没有判断bainu是否安装或最新版本，
-            // 且确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        //4.Send
+        if (api.isBainuInstalledOrLatestVersion()) {//Check if bainu installed on device or version mathes SDK requirement
+          //istalled && version mathces requirement
             api.send(bnSendRequest);
         } else {
+          //bainu download url, load this url for user if you like
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
         }
 
     }
 ```
 
-### 2. 分享图片
+### 2. Sharing Image
 
 ```java
-    /*图片分享*/
+    /*Shareing image*/
     public void imageShare(View view) {
 
         /*
-        * 两种方法进行图片分享:1.本地图片Uri,2.网络图片Uri
-        *
-        * 1.本地图片Uri必须以 "file://" 开头
-        *
-        * 2.网络图片Uri必须以 "http://" 或 "https://" 开头
+        * We support 2 types of image: 1.Local image 2.Image from internet
+        * For local images, Uri must begin with "file://
+        * For internet images, "http://" or "https://"
         * */
 
-        //1.创建对象
+        //1.Create image object
         BNImageObject imageObject = new BNImageObject();
-        //1)设置本地图片Uri
+        //1)Set Uri for local image
 //        imageObject.setLocalImageUri(Uri.parse("file:///storage/emulated/0/DCIM/Camera/fff.jpg"));
-        //2)设置网络图片Uri
+        //2)Set Uri for internet image
         imageObject.setNetImageUri(Uri.parse(
                 "http://b.hiphotos.baidu.com/zhidao/pic/item/f9dcd100baa1cd11a345a9b1bf12c8fcc2ce2db4.jpg"));
 
-        //2.设置跟随信息
+        //2.Set other params
         BNMediaMessage message = new BNMediaMessage(imageObject);
-        message.setDescription("Tomcat picture");//此项可以不设定
-        message.setTitle("picture");//此项可以不设定,但网页分享中必须设定
+        message.setDescription("Tomcat picture");//optional
+        message.setTitle("picture");//optional for local image, necessary for internet image
 
-        //3.设置request
+        //3.Set request
         BNSendRequest request = new BNSendRequest();
         request.message = message;
         request.scene = BNSendRequest.SCENE_QOMRLG;
@@ -212,38 +209,36 @@ request.scene = BNSendRequest.SCENE_ABDR;//收藏
             }
         });
 
-        //4.发送
+        //4.Send
         api.send(request);
     }
 ```
 
-### 3. 分享网页
+### 3. Sharing web url
 
 ```java
-    /*网页分享*/
+    /*Sharing web url*/
     public void webPageShare(View view) {
 
        /*
-        * 分享的网页的Uri必须以 "http://" 或 "https://" 开头
-        *
-        * 设置网页的缩略图有两种方法:图片网络Uri 或 图片的byte[]
-        *   所略图的Uri必须以 "http://" 或 "https://" 开头
+        * url must start with "http://" or "https://"
+        * url thumb image must be internet image or bitmap data (byte[])
+        * Uri of internet thumb image must start with "http://" or "https://"
         * */
 
-
-        //1.创建对象
+        //1.Create web object
         BNWebPageObject webObject = new BNWebPageObject();
         webObject.setWebUri(Uri.parse("http://www.zuga-tech.com"));
 
-        //2.设置跟随信息
+        //2.Set other data
         BNMediaMessage message = new BNMediaMessage(webObject);
-        message.setTitle("webPage title");//此项必须有
-        message.setDescription("webPage description");//此项可以不设定
-        //设定缩略图
+        message.setTitle("webPage title");//must set
+        message.setDescription("webPage description");//optional
+        //set thumb image
         message.setThumbNetPicUri(Uri.parse("http://b.hiphotos.baidu.com/" +
                 "zhidao/pic/item/f9dcd100baa1cd11a345a9b1bf12c8fcc2ce2db4.jpg"));
 
-        //3.设置request
+        //3.create request
         BNSendRequest request = new BNSendRequest();
         request.message = message;
         request.scene = BNSendRequest.SCENE_QOMRLG;
@@ -256,41 +251,44 @@ request.scene = BNSendRequest.SCENE_ABDR;//收藏
             }
         });
 
-        //4.发送
+        //4.Send
         api.send(request);
     }
 ```
 
-## 六、Bainu登录
+## 6. Login with Bainu account
 
-移动应用Bainu登录是基于OAuth2.0协议标准构建的Bainu OAuth2.0授权登录系统。
+- Third party login with Bainu account is based on OAuth2.0 authorization.
 
-在进行Bainu OAuth2.0授权登录接入之前，请联系Bainu开发人员，提交应用详情并获取对应的AppID和AppSecret，可开始接入流程。
+- In this section, we assume you have already got your AppID and AppScret.
 
-目前移动应用上Bainu登录只提供原生的登录方式，需要用户安装Bainu客户端才能配合使用。
+- **Note:** Bainu must be installed on device, otherwise user will not be able to log in, for we only provide native way of authorization
 
-### 1. 授权流程说明
+### 1.Procedure
 
-Bainu OAuth2.0授权登录让Bainu用户使用Bainu身份安全登录第三方应用，在Bainu用户授权登录已接入Bainu OAuth2.0的第三方应用后，第三方可以获取到用户的接口调用凭证（access_token），通过access_token可以进行Bainu开放平台授权关系接口调用，从而可实现获取Bainu用户基本开放信息和帮助用户实现基础开放功能等。
 
-Bainu OAuth2.0授权登录目前支持authorization_code模式，适用于拥有server端的应用授权。该模式整体流程为：
+Bainu OAuth2.0 authorization ensures the user to login to third party app with his/her bainu account securely. After user having logged in via this authorization, third party app will get the user's access_token for this login session to get the user's basic informations from our open APIs.
 
-- 第三方发起Bainu授权登录请求，Bainu用户允许授权第三方应用后，Bainu会拉起应用，并且带上授权临时票据code参数；(BainuSdk只做这一步，获得code参数)
-- 通过code参数加上AppID和AppSecret等，通过API换取access_token；（第三方应用把code传给第三方应用服务器，服务器作此步骤）
-- 通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。（第三方服务器反馈给第三方应用bainu用户基本信息）
+Bainu OAuth2.0 supports only authorization_code method, and is recommended for apps that have server back-end. The main procedure is:
 
-### 2. 获取code参数
+  - Third apps request for Bainu authorization, Bainu user will decide if he/she want to login, if yes, Bainu will call the third app and feed the code that was given from Bainu server back to third party app for temperarily authorization.
+
+- With this code and AppID and AppSecret, third party app may get the access_token of this session, we will send this access_token to third party server end.
+
+- Third party app may call our open APIs with this access_token to get the user's bacis informations.
+
+### 2. Getting the `code`
 
 ```java
-    /*bainu 登录*/
+    /*bainu login*/
     public void login(View view) {
         BNSendRequest request = new BNSendRequest();
         request.isLogin = true;
         request.setRespListener(new BNSendRequest.RespListener() {
             /**
-             * 登录成功或失败调用此方法
-             * @param errorType 错误类型，值为0没有错误，值为其它出错
-             * @param message errorType == 0返回code参数，errorType != 0返回错误信息
+             * This listener will be called no matter the login is succeed or failed.
+             * @param errorType 0 for success, others for error
+             * @param message error message when erryrType!=0
              */
             @Override
             public void resp(int errorType, String message) {
@@ -307,27 +305,28 @@ Bainu OAuth2.0授权登录目前支持authorization_code模式，适用于拥有
 }
 ```
 
-## 七、版本介绍
+## 7.About Versions and updates
 
 ### V1.0.0 :
 
-- 实现文字、图片、网页分享到Bainu
-
-- 实现第三方应用从Bainu授权登陆
+- Text, image, web url shareing is implemented
+- Third party login is implemented
 
 ### V1.0.1 :
 
-- 修改android 6.0及以上权限问题
-
-- 增加第三方应用名称传给Bainu
+- Fixed the android M permission problems
+- Added third party app's name to be displayed in Bainu when login
 
 ### V1.0.2
 
-- 修复一些bug
+- some bugs fixed
 
 ### v1.0.3
 
 - 修改初始化接口
+- modified initializing apis
+- SDK repository changed
 
-- 换仓库
+
+### Please raise issue for any question, or contact: help@zuga-tech.com with subject starts with "BainuSDK"
 
