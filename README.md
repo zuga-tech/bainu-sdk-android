@@ -46,15 +46,19 @@ allprojects {
 - In your App's `build.gradle`, add the following dependencies:
 
 ```java
-compile 'com.github.zuga-tech:bainu-sdk-android:1.0.3' // check the latest version on github
-compile 'com.android.support:appcompat-v7:23.2.1' // change version according to your project
+//below the gradle3.0 use `compile` instead of `implementation`
+implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4' // check the latest version on github
+implementation 'com.android.support:appcompat-v7:27.0.2' // change version according to your project
 ```
+
+    
+
 
 ### 1.2 Import Jar package into your Eclipse project
 
 ```java
-- import bainuSdk(version_code).jar into project
-- import android.support.v7(version_code) into project
+ import bainuSdk(version_code).jar into project
+ import android.support.v7(version_code) into project
 ```
 
 ## 4. Initialization
@@ -325,6 +329,10 @@ Bainu OAuth2.0 only supports the authorization_code method, which is recommended
 
 - modified initializing apis
 - SDK repository changed
+
+### v1.0.4
+
+- update gradle version to 3.0
 
 
 ### Please raise an issue for any question, or contact: help@zuga-tech.com with the subject starting with "BainuSDK"
