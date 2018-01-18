@@ -47,8 +47,9 @@ allprojects {
 - 在moudle build.gradle 的 dependencies 节点加入如下依赖：
 
 ```java
-compile 'com.github.zuga-tech:bainu-sdk-android:1.0.3'//后续随时更新
-compile 'com.android.support:appcompat-v7:23.2.1'//版本根据自己的项目
+版本为小于gradle3.0用 `compile` 代替 `implementation`
+implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4'//后续随时更新
+implementation 'com.android.support:appcompat-v7:27.0.2'//版本根据自己的项目
 ```
 
 ### 1.2 eclipse 导入jar包
@@ -330,4 +331,8 @@ Bainu OAuth2.0授权登录目前支持authorization_code模式，适用于拥有
 - 修改初始化接口
 
 - 换仓库
+
+### v1.0.4
+
+- 更新gradle版本为3.0
 
