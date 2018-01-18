@@ -218,7 +218,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         BNImageObject imageObject = new BNImageObject();
         if (isLocalPic) {
             //1)设置本地图片Uri
-            imageObject.setLocalImageUri(Uri.parse("file:///storage/emulated/0/DCIM/Camera/test1.jpg"));
+            imageObject.setLocalImageUri(Uri.parse("file:///storage/emulated/0/DCIM/Camera/test.jpg"));
             Toast.makeText(this, "请到MainActivity的sharePic方法里修改本地图片", Toast.LENGTH_LONG).show();
         } else {
             //2)设置网络图片Uri
