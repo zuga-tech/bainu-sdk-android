@@ -21,6 +21,9 @@ import com.zuga.bainu.objects.BNTextObject;
 import com.zuga.bainu.objects.BNWebPageObject;
 
 
+/**
+ * @author saqrag
+ */
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private int scene = BNSendRequest.SCENE_YARLQAA;
@@ -31,13 +34,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RadioButton rvAbdr = (RadioButton) findViewById(R.id.rb_abdr);
-        RadioButton rvQomrlg = (RadioButton) findViewById(R.id.rb_qomrlg);
-        RadioButton rvYarlqaa = (RadioButton) findViewById(R.id.rb_yarlqaa);
+        RadioButton rvAbdr = findViewById(R.id.rb_abdr);
+        RadioButton rvQomrlg = findViewById(R.id.rb_qomrlg);
+        RadioButton rvYarlqaa = findViewById(R.id.rb_yarlqaa);
         rvAbdr.setOnClickListener(this);
         rvQomrlg.setOnClickListener(this);
         rvYarlqaa.setOnClickListener(this);
-        tvLog = (TextView) findViewById(R.id.tv_log);
+        tvLog = findViewById(R.id.tv_log);
         Log.e(TAG, "file: " + getFilesDir());
         Log.e(TAG, "cache: " + getCacheDir());
 
@@ -45,8 +48,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         api = BNApiFactory.getBNApi();
     }
 
-    /*文字分享*/
-    public void TextShare(View view) {
+    /**
+     * 文字分享
+     */
+    public void textShare(View view) {
         //bainu目前只能支持蒙科里编码书写的蒙古语,其他语言文字用Unicode（android默认）
 
         //1.创建文字对象（蒙语用蒙科里编码写）
@@ -80,8 +85,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
 
         //4.发送
-        if (api.isBainuInstalledOrLatestVersion()) {//如果没有判断bainu是否安装或最新版本，
-            // 且确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        //判断bainu是否安装或最新版本
+        if (api.isBainuInstalledOrLatestVersion()) {
+            // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
             api.send(bnSendRequest);
         } else {
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
@@ -90,33 +96,37 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
-    /*图片分享*/
+    /**
+     * 图片分享
+     */
     public void imageShare(View view) {
         getType();
     }
 
 
-    /*网页分享*/
+    /**
+     * 网页分享
+     */
     public void webPageShare(View view) {
 
-       /*
-        * 分享的网页的Uri必须以 "http://" 或 "https://" 开头
-        *
-        * 设置网页的缩略图:Uri
-        *   所略图的Uri必须以 "http://" 或 "https://" 开头
-        * */
-
+        /*
+         * 分享的网页的Uri必须以 "http://" 或 "https://" 开头
+         *
+         * 设置网页的缩略图:Uri
+         *   所略图的Uri必须以 "http://" 或 "https://" 开头
+         * */
 
         //1.创建对象
         BNWebPageObject webObject = new BNWebPageObject();
-        webObject.setWebUri(Uri.parse("http://www.zuga-tech.com"));
+        webObject.setWebUri(Uri.parse("http://www.zuga-tech.net"));
 
         //2.设置跟随信息
         BNMediaMessage message = new BNMediaMessage(webObject);
-        message.setTitle("webPage title");//此项必须有
-        message.setDescription("webPage description");//此项可以不设定
-        //设定缩略图有两种方法
-//        1）网络图片
+        //此项必须有
+        message.setTitle("webPage title");
+        //此项可以不设定
+        message.setDescription("webPage description");
+
         message.setThumbNetPicUri(Uri.parse("http://b.hiphotos.baidu.com/" +
                 "zhidao/pic/item/f9dcd100baa1cd11a345a9b1bf12c8fcc2ce2db4.jpg"));
 
@@ -136,15 +146,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
 
         //4.发送
-        if (api.isBainuInstalledOrLatestVersion()) {//如果没有判断bainu是否安装或最新版本，
-            // 且确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        //判断bainu是否安装或最新版本，
+        if (api.isBainuInstalledOrLatestVersion()) {
+            // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
             api.send(request);
         } else {
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
         }
     }
 
-    /*bainu 登录*/
+    /**
+     * bainu 登录
+     */
     public void login(View view) {
         BNSendRequest request = new BNSendRequest();
         request.isLogin = true;
@@ -165,8 +178,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
 
         //4.发送
-        if (api.isBainuInstalledOrLatestVersion()) {//如果没有判断bainu是否安装或最新版本，
-            // 且确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        //判断bainu是否安装或最新版本，
+        if (api.isBainuInstalledOrLatestVersion()) {
+            // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
             api.send(request);
         } else {
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
@@ -183,6 +197,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 scene = BNSendRequest.SCENE_YARLQAA;
                 break;
             case R.id.rb_qomrlg:
+            default:
                 scene = BNSendRequest.SCENE_QOMRLG;
                 break;
         }
@@ -207,12 +222,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private void sharePic(boolean isLocalPic) {
         /*
-        * 两种方法进行图片分享:1.本地图片Uri,2.网络图片Uri
-        *
-        * 1.本地图片Uri必须以 "file://" 开头
-        *
-        * 2.网络图片Uri必须以 "http://" 或 "https://" 开头
-        * */
+         * 两种方法进行图片分享:1.本地图片Uri,2.网络图片Uri
+         *
+         * 1.本地图片Uri必须以 "file://" 开头
+         *
+         * 2.网络图片Uri必须以 "http://" 或 "https://" 开头
+         * */
 
         //1.创建对象
         BNImageObject imageObject = new BNImageObject();
@@ -227,8 +242,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         //2.设置跟随信息
         BNMediaMessage message = new BNMediaMessage(imageObject);
-        message.setDescription("Tomcat picture");//此项可以不设定
-        message.setTitle("picture");//此项可以不设定,但网页分享中必须设定
+        //此项可以不设定
+        message.setDescription("Tomcat picture");
+        //此项可以不设定,但网页分享中必须设定
+        message.setTitle("picture");
 
         //3.设置request
         BNSendRequest request = new BNSendRequest();
@@ -246,8 +263,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
 
         //4.发送
-        if (api.isBainuInstalledOrLatestVersion()) {//如果没有判断bainu是否安装或最新版本，
-            // 且确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        //判断bainu是否安装或最新版本
+        if (api.isBainuInstalledOrLatestVersion()) {
+            // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
             api.send(request);
         } else {
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());

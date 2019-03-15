@@ -12,8 +12,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="TextShare"
-            android:text="Text_Share" />
+            android:onClick="textShare"
+            android:text="text_Share" />
 
         <Button
             android:layout_width="match_parent"
