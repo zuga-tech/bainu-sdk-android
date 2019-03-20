@@ -18,5 +18,5 @@ android {
 }
 
 dependencies {
-    api files('libs/BainuSdk1.0.3.jar')
+    api files('libs/BainuSdk1.1.0.jar')
 }
