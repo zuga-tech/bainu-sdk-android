@@ -29,7 +29,8 @@ android {
 }
 
 dependencies {
-    implementation project(':BainuSdkDevLib')
+    implementation project(':BainuSdkLib')
+//    implementation project(':BainuSdkDevLib')
     //    implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4'
     implementation 'com.android.support:appcompat-v7:28.0.0'
 }
