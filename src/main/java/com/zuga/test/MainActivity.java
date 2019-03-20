@@ -86,12 +86,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         //4.发送
         //判断bainu是否安装或最新版本
-        if (api.isBainuInstalledOrLatestVersion()) {
-            // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
-            api.send(bnSendRequest);
-        } else {
-            Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
-        }
+//        if (api.isBainuInstalledOrLatestVersion()) {
+        // 此方法确实手机没有装或跟新，自动转到bainu下载浏览器页面
+        api.send(bnSendRequest);
+//        } else {
+//            Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
+//        }
 
     }
 
