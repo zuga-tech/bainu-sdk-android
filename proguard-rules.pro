@@ -16,9 +16,9 @@
 #   public *;
 #}
 
--libraryjars '/home/saqrag/jdk/jdk1.8/jre/lib/rt.jar'
+# -libraryjars '/home/saqrag/jdk/jdk1.8/jre/lib/rt.jar'
 
--libraryjars '/home/saqrag/Android/Sdk/platforms/android-19/android.jar'
+# -libraryjars '/home/saqrag/Android/Sdk/platforms/android-19/android.jar'
 
 -optimizationpasses 5
 
