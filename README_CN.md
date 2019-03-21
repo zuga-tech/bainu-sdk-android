@@ -48,8 +48,8 @@ allprojects {
 
 ```java
 版本为小于gradle3.0用 `compile` 代替 `implementation`
-implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4'//后续随时更新
-implementation 'com.android.support:appcompat-v7:27.0.2'//版本根据自己的项目
+implementation 'com.github.zuga-tech:bainu-sdk-android:1.1.0'//后续随时更新
+implementation 'com.android.support:appcompat-v7:28.0.0'//版本根据自己的项目
 ```
 
 ### 1.2 eclipse 导入jar包
@@ -64,9 +64,15 @@ implementation 'com.android.support:appcompat-v7:27.0.2'//版本根据自己的�
 ### 添加权限
 
 ```java
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-sdk不用这个权限，分享本地图片时请自行添加此权限->
+```
+
+### 支持http
+
+- 在Android9(P)(api=28) 开始默认https不支持http，BainuSdk使用http通信服务器验证sdk。所以在AndroidManifest 的 <application> 标签上添加如下属性开启http
+
+```java
+android:usesCleartextTraffic="true"
 ```
 
 ### 创建Application子类
@@ -335,4 +341,10 @@ Bainu OAuth2.0授权登录目前支持authorization_code模式，适用于拥有
 ### v1.0.4
 
 - 更新gradle版本为3.0
+
+### v1.0.4
+
+- 去掉phone state 权限
+
+- 修复个别时候一个分享请求回调多次的问题（在Bainu版本7.0.5及以上版本生效）
 

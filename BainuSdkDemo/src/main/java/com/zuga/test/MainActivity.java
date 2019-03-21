@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bug.test.R;
 import com.leon.lfilepickerlibrary.LFilePicker;
@@ -26,7 +25,6 @@ import com.zuga.bainu.objects.BNWebPageObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import rebus.permissionutils.AskAgainCallback;
 import rebus.permissionutils.FullCallback;
 import rebus.permissionutils.PermissionEnum;
 import rebus.permissionutils.PermissionManager;

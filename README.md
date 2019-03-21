@@ -47,11 +47,9 @@ allprojects {
 
 ```java
 //below the gradle3.0 use `compile` instead of `implementation`
-implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4' // check the latest version on github
-implementation 'com.android.support:appcompat-v7:27.0.2' // change version according to your project
+implementation 'com.github.zuga-tech:bainu-sdk-android:1.1.0' // check the latest version on github
+implementation 'com.android.support:appcompat-v7:28.0.0' // change version according to your project
 ```
-
-    
 
 
 ### 1.2 Import Jar package into your Eclipse project
@@ -66,9 +64,15 @@ implementation 'com.android.support:appcompat-v7:27.0.2' // change version accor
 ### Add permissions in your App's `AndroidManifest.xml`
 
 ```java
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-The sdk doesn't use this permission, but you're going to need this if you want to share a local image->
+```
+
+### 支持http
+
+- In Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the <application> tag of AndroidManifest.xml to enable http.
+
+```java
+android:usesCleartextTraffic="true"
 ```
 
 ### 5. Create a class that extends Application
@@ -334,6 +338,11 @@ Bainu OAuth2.0 only supports the authorization_code method, which is recommended
 
 - update gradle version to 3.0
 
+### v1.1.0
+
+- Remove phone state permission
+
+- Fix callback is called multiple times in one request sometimes. (Effective in Bainu version 7.0.5 and later)
 
 ### Please raise an issue for any question, or contact: help@zuga-tech.com with the subject starting with "BainuSDK"
 

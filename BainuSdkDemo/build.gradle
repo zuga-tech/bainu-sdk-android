@@ -34,9 +34,9 @@ android {
 }
 
 dependencies {
-    implementation project(':BainuSdkLib')
+//    implementation project(':BainuSdkLib')
 //    implementation project(':BainuSdkDevLib')
-    //    implementation 'com.github.zuga-tech:bainu-sdk-android:1.0.4'
+    implementation 'com.github.zuga-tech:bainu-sdk-android:1.1.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation('com.leon:lfilepickerlibrary:1.8.0') {
         exclude group: "com.android.support", module: "appcompat-v7"
