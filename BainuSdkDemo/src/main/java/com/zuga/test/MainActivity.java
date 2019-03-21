@@ -3,8 +3,10 @@ package com.zuga.test;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bug.test.R;
+import com.leon.lfilepickerlibrary.LFilePicker;
 import com.zuga.bainu.BNApi;
 import com.zuga.bainu.BNApiFactory;
 import com.zuga.bainu.objects.BNImageObject;
@@ -19,6 +22,14 @@ import com.zuga.bainu.BNMediaMessage;
 import com.zuga.bainu.BNSendRequest;
 import com.zuga.bainu.objects.BNTextObject;
 import com.zuga.bainu.objects.BNWebPageObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rebus.permissionutils.AskAgainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
 
 
 /**
@@ -29,6 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private int scene = BNSendRequest.SCENE_YARLQAA;
     private BNApi api;
     private TextView tvLog;
+    private final static int REQUESTCODE_FROM_ACTIVITY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +89,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void resp(int errorType, String message) {
                 if (errorType != 0) {
-                    tvLog.setText("ErrorType: " + errorType + "-----" + "message: " + message);
+                    appendLog("ErrorType: " + errorType + "-----" + "message: " + message);
                 } else {
-                    tvLog.setText("success");
+                    appendLog("success");
                 }
             }
         });
@@ -138,9 +150,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void resp(int errorType, String message) {
                 if (errorType != 0) {
-                    tvLog.setText("ErrorType: " + errorType + "-----" + "message: " + message);
+                    appendLog("ErrorType: " + errorType + "-----" + "message: " + message);
                 } else {
-                    tvLog.setText("success");
+                    appendLog("success");
                 }
             }
         });
@@ -170,9 +182,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void resp(int errorType, String message) {
                 if (errorType != 0) {
-                    tvLog.setText("ErrorType: " + errorType + "-----" + "message: " + message);
+                    appendLog("ErrorType: " + errorType + "-----" + "message: " + message);
                 } else {
-                    tvLog.setText("success" + "------" + "code: " + message);
+                    appendLog("success" + "------" + "code: " + message);
                 }
             }
         });
@@ -209,18 +221,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 .setPositiveButton("网络图片", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        sharePic(false);
+                        sharePic(false, null);
                     }
                 })
                 .setNegativeButton("本地图片", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        sharePic(true);
+                        PermissionManager.Builder()
+                                .permission(PermissionEnum.WRITE_EXTERNAL_STORAGE, PermissionEnum.READ_EXTERNAL_STORAGE)
+                                .callback(new FullCallback() {
+                                    @Override
+                                    public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+                                        if (permissionsGranted != null
+                                                && permissionsGranted.contains(PermissionEnum.WRITE_EXTERNAL_STORAGE)
+                                                && permissionsGranted.contains(PermissionEnum.READ_EXTERNAL_STORAGE)) {
+                                            new LFilePicker()
+                                                    .withActivity(MainActivity.this)
+                                                    .withRequestCode(REQUESTCODE_FROM_ACTIVITY)
+                                                    .withFileFilter(new String[]{".png", ".jpg"})
+                                                    .withMaxNum(1)
+                                                    .start();
+                                        }
+                                    }
+                                })
+                                .ask(MainActivity.this);
                     }
                 }).show();
     }
 
-    private void sharePic(boolean isLocalPic) {
+    private void sharePic(boolean isLocalPic, String path) {
         /*
          * 两种方法进行图片分享:1.本地图片Uri,2.网络图片Uri
          *
@@ -233,8 +262,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         BNImageObject imageObject = new BNImageObject();
         if (isLocalPic) {
             //1)设置本地图片Uri
-            imageObject.setLocalImageUri(Uri.parse("file:///storage/emulated/0/DCIM/Camera/test.jpg"));
-            Toast.makeText(this, "请到MainActivity的sharePic方法里修改本地图片", Toast.LENGTH_LONG).show();
+            imageObject.setLocalImageUri(Uri.parse(path));
         } else {
             //2)设置网络图片Uri
             imageObject.setNetImageUri(Uri.parse(
@@ -255,9 +283,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void resp(int errorType, String message) {
                 if (errorType != 0) {
-                    tvLog.setText("ErrorType: " + errorType + "-----" + "message: " + message);
+                    appendLog("ErrorType: " + errorType + "-----" + "message: " + message);
                 } else {
-                    tvLog.setText("success");
+                    appendLog("success");
                 }
             }
         });
@@ -270,6 +298,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
         } else {
             Log.e(TAG, "bainuDownUri: " + api.getBainuDownUri());
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUESTCODE_FROM_ACTIVITY) {
+                List<String> list = data.getStringArrayListExtra("paths");
+                String path = list.get(0);
+                if (!path.startsWith("file://")) {
+                    path = "file://" + path;
+                }
+                sharePic(true, path);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(this, requestCode, permissions, grantResults);
+    }
+
+    private void appendLog(String string) {
+        tvLog.setText(tvLog.getText() + "\n" + string);
     }
 }
 
