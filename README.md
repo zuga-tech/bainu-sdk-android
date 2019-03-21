@@ -69,7 +69,7 @@ implementation 'com.android.support:appcompat-v7:28.0.0' // change version accor
 
 ### Enable http
 
-- In Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the `<application>` tag of AndroidManifest.xml to enable http.
+- On Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the `<application>` tag of AndroidManifest.xml to enable http.
 
 ```java
 android:usesCleartextTraffic="true"
@@ -342,7 +342,7 @@ Bainu OAuth2.0 only supports the authorization_code method, which is recommended
 
 - Remove phone state permission
 
-- Fix callback is called multiple times in one request sometimes. (Effective in Bainu version 7.0.5 and later)
+- Fix: callback getting called multiple times on one request. (Effective on Bainu version 7.0.5 or above)
 
 ### Please raise an issue for any question, or contact: help@zuga-tech.com with the subject starting with "BainuSDK"
 
