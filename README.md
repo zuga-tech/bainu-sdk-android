@@ -69,7 +69,7 @@ implementation 'com.android.support:appcompat-v7:28.0.0' // change version accor
 
 ### Enable http
 
-- In Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the <application> tag of AndroidManifest.xml to enable http.
+- In Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the `<application>` tag of AndroidManifest.xml to enable http.
 
 ```java
 android:usesCleartextTraffic="true"

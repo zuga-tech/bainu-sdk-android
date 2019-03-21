@@ -69,7 +69,7 @@ implementation 'com.android.support:appcompat-v7:28.0.0'//版本根据自己的�
 
 ### 支持http
 
-- 在Android9(P)(api=28) 开始默认https不支持http，BainuSdk使用http通信服务器验证sdk。所以在AndroidManifest 的 <application> 标签上添加如下属性开启http
+- 在Android9(P)(api=28) 开始默认https不支持http，BainuSdk使用http通信服务器验证sdk。所以在AndroidManifest 的 `<application>` 标签上添加如下属性开启http
 
 ```java
 android:usesCleartextTraffic="true"
