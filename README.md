@@ -67,7 +67,7 @@ implementation 'com.android.support:appcompat-v7:28.0.0' // change version accor
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-The sdk doesn't use this permission, but you're going to need this if you want to share a local image->
 ```
 
-### 支持http
+### Enable http
 
 - In Android9(P)(api=28) and later, system support https instead of http by default，BainuSdk use http request to valid sdk. so we add following attribute on the <application> tag of AndroidManifest.xml to enable http.
 
